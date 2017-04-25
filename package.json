@@ -1,6 +1,6 @@
 {
   "name": "yarnbump",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "`yarn upgrade`s your deps.",
   "bin": {
     "yarnbump": "./bin/yarnbump"
