@@ -1,0 +1,19 @@
+{
+  "name": "yarnbump",
+  "version": "0.0.0",
+  "description": "`yarn upgrade`s your deps.",
+  "bin": {
+    "yarnbump": "./bin/yarnbump"
+  },
+  "keywords": [
+    "yarn",
+    "upgrade"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "object.entries": "^1.0.4",
+    "semver-regex": "^1.0.0"
+  }
+}

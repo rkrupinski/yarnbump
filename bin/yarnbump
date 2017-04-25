@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+require('colors');
+
+const { readFileSync } = require('fs');
+const { resolve } = require('path');
+const { spawn } = require('child_process');
+const entries = require('object.entries');
+const semverRegex = require('semver-regex');
+const [,, projectPath = '.'] = process.argv;
+const cwd = process.cwd();
+
+if (!Object.entries) {
+  entries.shim();
+}
+
+let pkg;
+
+try {
+  pkg = require(resolve(cwd, projectPath, 'package.json'));
+} catch(err) {
+  return process.stdout.write('Couldn\'t load package.json'.red + '\n');
+}
+
+const deps = Object.assign({}, pkg.dependencies, pkg.devDependencies);
+
+const toBump = Object.entries(deps)
+    .filter(([dep, version]) => semverRegex().exec(version))
+    .map(([dep]) => dep);
+
+const yu = spawn('yarn', ['upgrade', ...toBump], {
+  cwd: resolve(cwd, projectPath),
+})
+
+yu.stdout.pipe(process.stdout);
+yu.stderr.pipe(process.stderr);
+
+yu.on('close', (code) => {
+  if (code === 0) {
+    process.stdout.write('Yay!'.green + '\n');
+  } else {
+    process.stdout.write('Something went wrong :('.red);
+  }
+});
+
