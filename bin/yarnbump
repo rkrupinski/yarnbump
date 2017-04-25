@@ -2,7 +2,6 @@
 
 require('colors');
 
-const { readFileSync } = require('fs');
 const { resolve } = require('path');
 const { spawn } = require('child_process');
 const entries = require('object.entries');
@@ -42,4 +41,3 @@ yu.on('close', (code) => {
     process.stdout.write('Something went wrong :('.red);
   }
 });
-
